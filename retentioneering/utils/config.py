@@ -4,7 +4,7 @@ import json
 import os
 import uuid
 import warnings
-from dataclasses import asdict
+from dataclasses import asdict, field
 from pathlib import Path
 
 from pydantic import BaseConfig
@@ -86,11 +86,12 @@ class Config(BaseConfig):
     Configuration for the application.
     """
 
-    tracking: TrackingConfig = TrackingConfig()
-    user: UserConfig = UserConfig()
-    transition_graph: TransitionGraphConfig = TransitionGraphConfig()
-    preprocessing_graph: PreprocessiongGraphConfig = PreprocessiongGraphConfig()
 
+    tracking: TrackingConfig = field(default_factory=TrackingConfig)
+    user: UserConfig = field(default_factory=UserConfig)
+    transition_graph: TransitionGraphConfig = field(default_factory=TransitionGraphConfig)
+    preprocessing_graph: PreprocessiongGraphConfig = field(default_factory=PreprocessiongGraphConfig)
+    
     def _get_path_for_config(self) -> str | None:
         config_filename = ".retentioneering_config.json"
         home = str(Path.home())
